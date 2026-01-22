@@ -8,13 +8,13 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 
-from .models import (
+from models import (
     User, GameMode, GameStatus, Position, 
     AuthCredentials, SignUpCredentials, AuthResponse,
     LeaderboardEntry, LiveGame, UserStats, 
     Token, TokenData
 )
-from .database import db
+from database import db
 
 # Configuration
 SECRET_KEY = "super-secret-key-change-me"

@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from typing import List, Dict, Optional
-from .models import User, LeaderboardEntry, LiveGame, GameMode, GameStatus, Position
+from models import User, LeaderboardEntry, LiveGame, GameMode, GameStatus, Position
 
 # Mock Database
 class MockDatabase:
