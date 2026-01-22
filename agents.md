@@ -26,3 +26,12 @@ To maintain code quality and project stability, all AI coding assistants should 
 ## 📋 Documentation
 
 - [ ] **Update artifacts**: Maintain the `implementation_plan.md`, `task.md`, and `walkthrough.md` in the `.gemini/antigravity/brain` directory to keep the user informed.
+
+    # Sync dependencies from lockfile
+    uv sync
+
+    # Add a new package
+    uv add <PACKAGE-NAME>
+
+    # Run Python files
+    uv run python <PYTHON-FILE>
