@@ -4,6 +4,9 @@ To maintain code quality and project stability, all AI coding assistants should 
 
 ## 🚀 Development Workflow
 
+- [ ] **Branching Strategy**: Always create a new branch when starting a new implementation/plan.
+- [ ] **No Direct Commits**: Never commit directly to the `main` branch.
+- [ ] **Pull Requests**: After finishing work on a branch, raise a Pull Request (PR) to `main`.
 - [ ] **Run Tests Before Finalizing**: Always run the test suite before declaring a task complete.
 - [ ] **Commit Regularly**: Make small, logical commits after each reasonable step rather than one giant commit at the end.
 - [ ] **Use Imperative Commits**: Write commit messages in the imperative mood (e.g., "Add sound utility" instead of "Added sound utility").
@@ -27,6 +30,10 @@ To maintain code quality and project stability, all AI coding assistants should 
 
 - [ ] **Update artifacts**: Maintain the `implementation_plan.md`, `task.md`, and `walkthrough.md` in the `.gemini/antigravity/brain` directory to keep the user informed.
 
+## 🐍 Backend / Python (uv)
+
+- [ ] **Dependency Management**: Use `uv` for backend python management.
+    ```bash
     # Sync dependencies from lockfile
     uv sync
 
@@ -35,3 +42,4 @@ To maintain code quality and project stability, all AI coding assistants should 
 
     # Run Python files
     uv run python <PYTHON-FILE>
+    ```
