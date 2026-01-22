@@ -30,8 +30,11 @@ uv run python verify_api.py --port 8000
 
 ## Built With
 
-- **FastAPI**
-- **Pydantic**
-- **Uvicorn**
-- **Pytest**
-- **uv** (Package & Environment Management)
+- **FastAPI**: A modern, high-performance web framework for building APIs with Python.
+- **Pydantic**: Data validation and settings management using Python type annotations.
+- **Uvicorn**: A lightning-fast ASGI server implementation, used to serve the FastAPI application.
+- **Pytest**: A robust testing framework for writing and running unit and functional tests.
+- **httpx**: A next-generation HTTP client, used in tests and verification scripts for making async requests.
+- **Python-jose**: A JOSE (JSON Object Signing and Encryption) implementation, used for JWT authentication.
+- **Passlib**: A comprehensive password hashing library, used to securely handle user credentials.
+- **uv**: A high-performance Python package and environment manager that replaces `pip` and `venv`.
