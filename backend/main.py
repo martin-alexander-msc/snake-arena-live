@@ -107,4 +107,48 @@ async def logout():
 async def me(current_user: User = Depends(get_current_user)):
     return current_user
 
-# --- To be continued in next step ---
+# --- Leaderboard Routes ---
+
+@app.get("/leaderboard", response_model=List[LeaderboardEntry])
+async def get_leaderboard(mode: Optional[GameMode] = Query(None)):
+    entries = db.leaderboard
+    if mode:
+        entries = [e for e in entries if e.mode == mode]
+    
+    # Sort by score descending and return
+    sorted_entries = sorted(entries, key=lambda x: x.score, reverse=True)
+    for i, entry in enumerate(sorted_entries):
+        entry.rank = i + 1
+    return sorted_entries
+
+@app.post("/leaderboard/submit", response_model=LeaderboardEntry)
+async def submit_score(
+    score_data: dict, 
+    current_user: User = Depends(get_current_user)
+):
+    score = score_data.get("score")
+    mode = score_data.get("mode")
+    
+    if score is None or mode is None:
+        raise HTTPException(status_code=400, detail="Score and mode are required")
+    
+    entry_id = f"score_{int(datetime.utcnow().timestamp())}"
+    new_entry = LeaderboardEntry(
+        id=entry_id,
+        rank=0, # Will be calculated on fetch
+        userId=current_user.id,
+        username=current_user.username,
+        avatar=current_user.avatar,
+        score=score,
+        mode=mode,
+        date=datetime.utcnow()
+    )
+    
+    db.leaderboard.append(new_entry)
+    
+    # Update user's high score if applicable
+    if score > current_user.highScore:
+        current_user.highScore = score
+    current_user.gamesPlayed += 1
+    
+    return new_entry
