@@ -10,6 +10,7 @@ To maintain code quality and project stability, all AI coding assistants should 
 - [ ] **Pull Requests**: After finishing work on a branch, raise a Pull Request (PR) to `main` using the GitHub CLI (`gh pr create`).
     - Follow the [GitHub flow](https://docs.github.com/en/get-started/using-git/github-flow) principles.
 - [ ] **Run Tests Before Finalizing**: Always run the test suite before declaring a task complete.
+- [ ] **Explicit Permission**: NEVER make code changes or updates to files unless specifically asked by the user. If unsure, ask for clarification first.
 - [ ] **Commit Regularly**: Make small, logical commits after each reasonable step rather than one giant commit at the end.
 - [ ] **Use Imperative Commits**: Write commit messages in the imperative mood (e.g., "Add sound utility" instead of "Added sound utility").
 - [ ] **Verify Build**: Ensure the development server (`npm run dev`) starts without warnings or errors.
