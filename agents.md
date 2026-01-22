@@ -4,7 +4,7 @@ To maintain code quality and project stability, all AI coding assistants should 
 
 ## 🚀 Development Workflow
 
-- [ ] **Run Tests Before Finalizing**: Always run the test suite (`cd frontend && npm run test`) before declaring a task complete.
+- [ ] **Run Tests Before Finalizing**: Always run the test suite before declaring a task complete.
 - [ ] **Commit Regularly**: Make small, logical commits after each reasonable step rather than one giant commit at the end.
 - [ ] **Use Imperative Commits**: Write commit messages in the imperative mood (e.g., "Add sound utility" instead of "Added sound utility").
 - [ ] **Verify Build**: Ensure the development server (`npm run dev`) starts without warnings or errors.
