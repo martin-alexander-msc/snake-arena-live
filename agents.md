@@ -9,6 +9,8 @@ To maintain code quality and project stability, all AI coding assistants should 
 - [ ] **No Direct Commits**: Never commit directly to the `main` branch.
 - [ ] **Pull Requests**: After finishing work on a branch, raise a Pull Request (PR) to `main` using the GitHub CLI (`gh pr create`).
     - Follow the [GitHub flow](https://docs.github.com/en/get-started/using-git/github-flow) principles.
+    - MUST follow the [pull_request_template.md](file:///Users/marty/git/snake-arena-live/.github/pull_request_template.md) when raising a PR.
+- [ ] **Publish Branch**: Make sure to publish the created branch to GitHub (`git push -u origin <branch-name>`) after committing changes.
 - [ ] **Run Tests Before Finalizing**: Always run the test suite before declaring a task complete.
 - [ ] **Explicit Permission**: NEVER make code changes or updates to files unless specifically asked by the user. If unsure, ask for clarification first.
 - [ ] **Commit Regularly**: Make small, logical commits after each reasonable step rather than one giant commit at the end.
