@@ -182,3 +182,32 @@ async def leave_as_viewer(game_id: str):
     if game.viewers > 0:
         game.viewers -= 1
     return {"detail": "Left successfully"}
+
+# --- User Profile Routes ---
+
+@app.patch("/users/profile", response_model=User)
+async def update_profile(
+    updates: dict, 
+    current_user: User = Depends(get_current_user)
+):
+    if "username" in updates:
+        current_user.username = updates["username"]
+    if "avatar" in updates:
+        current_user.avatar = updates["avatar"]
+    return current_user
+
+@app.get("/users/{user_id}/stats", response_model=UserStats)
+async def get_user_stats(user_id: str):
+    user = db.users.get(user_id)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    # Calculate rank based on high score
+    sorted_users = sorted(db.users.values(), key=lambda x: x.highScore, reverse=True)
+    rank = next((i + 1 for i, u in enumerate(sorted_users) if u.id == user_id), 0)
+    
+    return UserStats(
+        highScore=user.highScore,
+        gamesPlayed=user.gamesPlayed,
+        rank=rank
+    )
