@@ -152,3 +152,33 @@ async def submit_score(
     current_user.gamesPlayed += 1
     
     return new_entry
+
+# --- Live Games Routes ---
+
+@app.get("/live-games", response_model=List[LiveGame])
+async def get_live_games():
+    return list(db.live_games.values())
+
+@app.get("/live-games/{game_id}", response_model=LiveGame)
+async def get_live_game(game_id: str):
+    game = db.live_games.get(game_id)
+    if not game:
+        raise HTTPException(status_code=404, detail="Game not found")
+    return game
+
+@app.post("/live-games/{game_id}/join")
+async def join_as_viewer(game_id: str):
+    game = db.live_games.get(game_id)
+    if not game:
+        raise HTTPException(status_code=404, detail="Game not found")
+    game.viewers += 1
+    return {"detail": "Joined successfully"}
+
+@app.post("/live-games/{game_id}/leave")
+async def leave_as_viewer(game_id: str):
+    game = db.live_games.get(game_id)
+    if not game:
+        raise HTTPException(status_code=404, detail="Game not found")
+    if game.viewers > 0:
+        game.viewers -= 1
+    return {"detail": "Left successfully"}
