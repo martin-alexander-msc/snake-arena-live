@@ -1,0 +1,375 @@
+openapi: 3.0.0
+info:
+  title: Snake Arena API
+  description: Backend API for the Snake Arena Live game
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3000
+    description: Local development server
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    GameMode:
+      type: string
+      enum: [pass-through, walls]
+
+    GameStatus:
+      type: string
+      enum: [idle, playing, paused, game-over]
+
+    Position:
+      type: object
+      properties:
+        x:
+          type: integer
+        y:
+          type: integer
+      required: [x, y]
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+        avatar:
+          type: string
+          nullable: true
+        highScore:
+          type: integer
+        gamesPlayed:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+      required: [id, username, email, highScore, gamesPlayed, createdAt]
+
+    AuthCredentials:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 6
+      required: [email, password]
+
+    SignUpCredentials:
+      allOf:
+        - $ref: '#/components/schemas/AuthCredentials'
+        - type: object
+          properties:
+            username:
+              type: string
+          required: [username]
+
+    AuthResponse:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+        token:
+          type: string
+      required: [user, token]
+
+    LeaderboardEntry:
+      type: object
+      properties:
+        id:
+          type: string
+        rank:
+          type: integer
+        userId:
+          type: string
+        username:
+          type: string
+        avatar:
+          type: string
+          nullable: true
+        score:
+          type: integer
+        mode:
+          $ref: '#/components/schemas/GameMode'
+        date:
+          type: string
+          format: date-time
+      required: [id, rank, userId, username, score, mode, date]
+
+    LiveGame:
+      type: object
+      properties:
+        id:
+          type: string
+        playerId:
+          type: string
+        playerName:
+          type: string
+        playerAvatar:
+          type: string
+          nullable: true
+        score:
+          type: integer
+        mode:
+          $ref: '#/components/schemas/GameMode'
+        snake:
+          type: array
+          items:
+            $ref: '#/components/schemas/Position'
+        food:
+          $ref: '#/components/schemas/Position'
+        status:
+          $ref: '#/components/schemas/GameStatus'
+        viewers:
+          type: integer
+        startedAt:
+          type: string
+          format: date-time
+      required: [id, playerId, playerName, score, mode, snake, food, status, viewers, startedAt]
+
+    UserStats:
+      type: object
+      properties:
+        highScore:
+          type: integer
+        gamesPlayed:
+          type: integer
+        rank:
+          type: integer
+      required: [highScore, gamesPlayed, rank]
+
+paths:
+  /auth/signup:
+    post:
+      summary: Register a new user
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignUpCredentials'
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '400':
+          description: Invalid input or user already exists
+
+  /auth/login:
+    post:
+      summary: Authenticate a user
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthCredentials'
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          description: Invalid credentials
+
+  /auth/logout:
+    post:
+      summary: Logout current user
+      tags: [Auth]
+      security:
+        - bearerAuth: []
+      responses:
+        '204':
+          description: Logout successful
+
+  /auth/me:
+    get:
+      summary: Get current authenticated user
+      tags: [Auth]
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Current user info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Not authenticated
+
+  /leaderboard:
+    get:
+      summary: Get leaderboard entries
+      tags: [Leaderboard]
+      parameters:
+        - name: mode
+          in: query
+          schema:
+            $ref: '#/components/schemas/GameMode'
+      responses:
+        '200':
+          description: List of leaderboard entries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LeaderboardEntry'
+
+  /leaderboard/submit:
+    post:
+      summary: Submit a new score
+      tags: [Leaderboard]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                score:
+                  type: integer
+                mode:
+                  $ref: '#/components/schemas/GameMode'
+              required: [score, mode]
+      responses:
+        '200':
+          description: Score submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeaderboardEntry'
+        '401':
+          description: Not authenticated
+
+  /live-games:
+    get:
+      summary: List all active live games
+      tags: [Live Games]
+      responses:
+        '200':
+          description: List of live games
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LiveGame'
+
+  /live-games/{gameId}:
+    get:
+      summary: Get details of a specific live game
+      tags: [Live Games]
+      parameters:
+        - name: gameId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Live game details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LiveGame'
+        '404':
+          description: Game not found
+
+  /live-games/{gameId}/join:
+    post:
+      summary: Join a live game as a viewer
+      tags: [Live Games]
+      parameters:
+        - name: gameId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Joined successfully
+        '404':
+          description: Game not found
+
+  /live-games/{gameId}/leave:
+    post:
+      summary: Leave a live game as a viewer
+      tags: [Live Games]
+      parameters:
+        - name: gameId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Left successfully
+
+  /users/profile:
+    patch:
+      summary: Update user profile
+      tags: [User Profile]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                avatar:
+                  type: string
+      responses:
+        '200':
+          description: Profile updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Not authenticated
+
+  /users/{userId}/stats:
+    get:
+      summary: Get stats for a specific user
+      tags: [User Profile]
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User stats
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserStats'
+        '404':
+          description: User not found
