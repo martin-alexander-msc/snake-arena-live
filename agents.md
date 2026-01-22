@@ -42,6 +42,9 @@ To maintain code quality and project stability, all AI coding assistants should 
     # Add a new package
     uv add <PACKAGE-NAME>
 
-    # Run Python files
-    uv run python <PYTHON-FILE>
+    # Run tests
+    uv run pytest
+
+    # Run the backend server (FastAPI)
+    uv run uvicorn main:app --reload
     ```
