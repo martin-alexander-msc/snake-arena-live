@@ -6,16 +6,24 @@ import { Skull, Pause, Play } from 'lucide-react';
 interface GameOverlayProps {
   status: GameStatus;
   score: number;
+  onStart: () => void;
 }
 
-export function GameOverlay({ status, score }: GameOverlayProps) {
+export function GameOverlay({ status, score, onStart }: GameOverlayProps) {
   if (status === 'playing') return null;
 
+  const handleClick = () => {
+    if (status === 'idle' || status === 'game-over') {
+      onStart();
+    }
+  };
+
   return (
-    <div 
+    <div
+      onClick={handleClick}
       className={cn(
         "absolute inset-0 flex items-center justify-center z-10",
-        "bg-background/80 backdrop-blur-sm rounded-lg"
+        "bg-background/80 backdrop-blur-sm rounded-lg cursor-pointer transition-colors hover:bg-background/70"
       )}
     >
       <div className="text-center space-y-4">

@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { GameState, Direction, Position, GameMode, GameStatus } from '@/types/game';
+import { audioService } from '@/utils/audio';
 
 const GRID_SIZE = 20;
 const INITIAL_SPEED = 150;
@@ -54,7 +55,7 @@ export function moveSnake(
 ): { newSnake: Position[]; ate: boolean; collision: boolean } {
   const head = snake[0];
   const vector = DIRECTION_VECTORS[direction];
-  
+
   let newHead: Position = {
     x: head.x + vector.x,
     y: head.y + vector.y,
@@ -141,7 +142,12 @@ export function useGameLogic(initialMode: GameMode = 'pass-through') {
       );
 
       if (collision) {
+        audioService.playGameOverSound();
         return { ...prev, status: 'game-over' };
+      }
+
+      if (ate) {
+        audioService.playEatSound();
       }
 
       const newScore = ate ? prev.score + 10 : prev.score;

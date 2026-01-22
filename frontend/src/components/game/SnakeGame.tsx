@@ -41,7 +41,11 @@ export function SnakeGame() {
           gridSize={gridSize}
           mode={gameState.mode}
         />
-        <GameOverlay status={gameState.status} score={gameState.score} />
+        <GameOverlay
+          status={gameState.status}
+          score={gameState.score}
+          onStart={startGame}
+        />
         <MobileControls onDirectionChange={changeDirection} />
       </div>
 
