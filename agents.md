@@ -4,11 +4,13 @@ To maintain code quality and project stability, all AI coding assistants should 
 
 ## 🚀 Development Workflow
 
-- [ ] **Branching Strategy**: Always create a new branch when starting a new implementation/plan from `main`.
+- [ ] **Branching Strategy**: ALWAYS check the current branch before starting work.
+    - Create a new branch ONLY if you are currently on `main`.
     - Branch names MUST be prefixed with `feature/` or `bug/` (e.g., `feature/add-login`).
-    - **Never** create a new branch if the current branch is not `main` (i.e., continue work in the existing feature/bug branch).
+    - **Never** create a new branch or "sub-branch" if the current branch is already a feature/bug branch. Continue work in the existing branch.
 - [ ] **No Direct Commits**: Never commit directly to the `main` branch.
-- [ ] **Pull Requests**: After finishing work on a branch, raise a Pull Request (PR) to `main` using the GitHub CLI (`gh pr create`).
+- [ ] **Pull Requests**: Raise a Pull Request (PR) to `main` using the GitHub CLI (`gh pr create`) only after finishing the task.
+    - **Check for existing PRs**: Only create a new PR if one does not already exist for the current branch.
     - Follow the [GitHub flow](https://docs.github.com/en/get-started/using-git/github-flow) principles.
     - MUST follow the [pull_request_template.md](file:///Users/marty/git/snake-arena-live/.github/pull_request_template.md) when raising a PR.
 - [ ] **Publish Branch**: Make sure to publish the created branch to GitHub (`git push -u origin <branch-name>`) after committing changes.
