@@ -63,7 +63,7 @@ describe('API Client', () => {
     it('should reject signup with short password', async () => {
       await expect(
         apiClient.signUp({
-          username: 'NewPlayer',
+          username: 'InvalidPlayer',
           email: 'unique@game.com',
           password: 'short',
         })
@@ -165,7 +165,7 @@ describe('API Client', () => {
       const success = await apiClient.joinAsViewer(games[0].id);
 
       expect(success).toBe(true);
-      
+
       const updatedGame = await apiClient.getLiveGame(games[0].id);
       expect(updatedGame?.viewers).toBe(initialViewers + 1);
     });
