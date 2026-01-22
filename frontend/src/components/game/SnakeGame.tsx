@@ -11,30 +11,39 @@ import { toast } from 'sonner';
 export function SnakeGame() {
   const { gameState, startGame, pauseGame, resetGame, setMode, changeDirection, gridSize } = useGameLogic();
   const { isAuthenticated, user } = useAuth();
+  const [isShaking, setIsShaking] = React.useState(false);
 
-  // Submit score when game ends
+  // Submit score when game ends and handle shake effect
   useEffect(() => {
-    if (gameState.status === 'game-over' && gameState.score > 0) {
-      if (isAuthenticated) {
-        apiClient.submitScore(gameState.score, gameState.mode).then((entry) => {
-          if (entry) {
-            toast.success(`Score submitted: ${gameState.score}`, {
-              description: 'Check the leaderboard to see your ranking!',
-            });
-          }
-        });
-      } else {
-        toast.info('Sign in to save your score!', {
-          description: `You scored ${gameState.score} points`,
-        });
+    if (gameState.status === 'game-over') {
+      // Trigger shake animation
+      setIsShaking(true);
+      const timer = setTimeout(() => setIsShaking(false), 1000);
+
+      if (gameState.score > 0) {
+        if (isAuthenticated) {
+          apiClient.submitScore(gameState.score, gameState.mode).then((entry) => {
+            if (entry) {
+              toast.success(`Score submitted: ${gameState.score}`, {
+                description: 'Check the leaderboard to see your ranking!',
+              });
+            }
+          });
+        } else {
+          toast.info('Sign in to save your score!', {
+            description: `You scored ${gameState.score} points`,
+          });
+        }
       }
+
+      return () => clearTimeout(timer);
     }
   }, [gameState.status, gameState.score, gameState.mode, isAuthenticated]);
 
   return (
     <div className="flex flex-col lg:flex-row gap-6 items-start justify-center">
       {/* Game Area */}
-      <div className="relative">
+      <div className={`relative ${isShaking ? 'animate-shake' : ''}`}>
         <GameCanvas
           snake={gameState.snake}
           food={gameState.food}
