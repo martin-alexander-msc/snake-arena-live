@@ -1,0 +1,27 @@
+{
+  "name": "snake-arena-live",
+  "version": "1.0.0",
+  "description": "A high-performance, real-time multiplayer snake game built with a modern web stack.",
+  "main": "index.js",
+  "scripts": {
+    "dev:frontend": "npm run dev --prefix frontend",
+    "dev:backend": "cd backend && uv run uvicorn main:app --reload --port 8081",
+    "dev": "concurrently -n \"frontend,backend\" -c \"cyan,magenta\" \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "start": "npm run dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/martin-alexander-msc/snake-arena-live.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/martin-alexander-msc/snake-arena-live/issues"
+  },
+  "homepage": "https://github.com/martin-alexander-msc/snake-arena-live#readme",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

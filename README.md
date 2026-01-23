@@ -16,17 +16,34 @@ This repository is organized as a monorepo containing both the frontend and back
 - **Node.js**: (v18+) for the frontend.
 - **Python**: (3.12+) with [uv](https://github.com/astral-sh/uv) for the backend.
 
-### 1. Frontend Development
+### Running the Full Stack
 
+The easiest way to run both frontend and backend together:
+
+```bash
+npm install  # First time only
+npm run dev
+```
+
+This will start:
+- **Frontend** at `http://localhost:8085`
+- **Backend** at `http://localhost:8081` (API docs at `/docs`)
+
+Both servers run simultaneously with color-coded output (cyan for frontend, magenta for backend).
+
+### Running Servers Individually
+
+If you prefer to run them separately:
+
+**Frontend:**
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
-*Accessible at `http://localhost:8082` by default.*
+*Accessible at `http://localhost:8085` by default.*
 
-### 2. Backend Development
-
+**Backend:**
 ```bash
 cd backend
 uv sync

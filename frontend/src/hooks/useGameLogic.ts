@@ -181,6 +181,17 @@ export function useGameLogic(initialMode: GameMode = 'pass-through') {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Ignore key events when user is typing in form fields
+      const target = e.target as HTMLElement;
+      if (
+        target.tagName === 'INPUT' ||
+        target.tagName === 'TEXTAREA' ||
+        target.tagName === 'SELECT' ||
+        target.isContentEditable
+      ) {
+        return;
+      }
+
       switch (e.key) {
         case 'ArrowUp':
         case 'w':
