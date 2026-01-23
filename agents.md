@@ -11,6 +11,7 @@ To maintain code quality and project stability, all AI coding assistants should 
 - [ ] **No Direct Commits**: Never commit directly to the `main` branch.
 - [ ] **Pull Requests**: Raise a Pull Request (PR) to `main` using the GitHub CLI (`gh pr create`) only after finishing the task.
     - **Check for existing PRs**: Only create a new PR if one does not already exist for the current branch.
+    - **Update existing PR descriptions**: If a PR already exists for the current branch, do NOT create a new PR. Instead, update the PR description to reflect the current work using `gh pr edit <pr-number> --body "<new-description>"`.
     - Follow the [GitHub flow](https://docs.github.com/en/get-started/using-git/github-flow) principles.
     - MUST follow the [pull_request_template.md](file:///Users/marty/git/snake-arena-live/.github/pull_request_template.md) when raising a PR.
 - [ ] **Publish Branch**: Make sure to publish the created branch to GitHub (`git push -u origin <branch-name>`) after committing changes.
