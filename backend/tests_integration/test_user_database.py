@@ -15,6 +15,7 @@ class TestUserCreation:
     def test_create_user(self, test_db_session: Session):
         """Test creating a new user in the database."""
         user = sql_models.User(
+            id="user_1",
             username="testuser",
             email="test@example.com",
             hashed_password="hashed_password_123"
@@ -31,6 +32,7 @@ class TestUserCreation:
     def test_retrieve_user_by_username(self, test_db_session: Session):
         """Test retrieving a user by username."""
         user = sql_models.User(
+            id="user_2",
             username="testuser",
             email="test@example.com",
             hashed_password="hashed_password_123"
@@ -49,6 +51,7 @@ class TestUserCreation:
     def test_retrieve_user_by_email(self, test_db_session: Session):
         """Test retrieving a user by email."""
         user = sql_models.User(
+            id="user_3",
             username="testuser",
             email="test@example.com",
             hashed_password="hashed_password_123"
@@ -66,6 +69,7 @@ class TestUserCreation:
     def test_duplicate_username_raises_error(self, test_db_session: Session):
         """Test that duplicate usernames raise an integrity error."""
         user1 = sql_models.User(
+            id="user_4",
             username="testuser",
             email="test1@example.com",
             hashed_password="hashed_password_123"
@@ -74,6 +78,7 @@ class TestUserCreation:
         test_db_session.commit()
 
         user2 = sql_models.User(
+            id="user_5",
             username="testuser",
             email="test2@example.com",
             hashed_password="hashed_password_456"
@@ -86,6 +91,7 @@ class TestUserCreation:
     def test_duplicate_email_raises_error(self, test_db_session: Session):
         """Test that duplicate emails raise an integrity error."""
         user1 = sql_models.User(
+            id="user_6",
             username="user1",
             email="test@example.com",
             hashed_password="hashed_password_123"
@@ -94,6 +100,7 @@ class TestUserCreation:
         test_db_session.commit()
 
         user2 = sql_models.User(
+            id="user_7",
             username="user2",
             email="test@example.com",
             hashed_password="hashed_password_456"
@@ -106,6 +113,7 @@ class TestUserCreation:
     def test_update_user(self, test_db_session: Session):
         """Test updating a user's information."""
         user = sql_models.User(
+            id="user_8",
             username="testuser",
             email="test@example.com",
             hashed_password="hashed_password_123"
@@ -122,6 +130,7 @@ class TestUserCreation:
     def test_delete_user(self, test_db_session: Session):
         """Test deleting a user."""
         user = sql_models.User(
+            id="user_9",
             username="testuser",
             email="test@example.com",
             hashed_password="hashed_password_123"
@@ -153,6 +162,7 @@ class TestUserQuery:
 
         for username, email, password in users_data:
             user = sql_models.User(
+                id=f"user_{username}",
                 username=username,
                 email=email,
                 hashed_password=password
@@ -169,6 +179,7 @@ class TestUserQuery:
         """Test counting users in the database."""
         for i in range(5):
             user = sql_models.User(
+                id=f"user_{i}",
                 username=f"user{i}",
                 email=f"user{i}@example.com",
                 hashed_password=f"pass{i}"
