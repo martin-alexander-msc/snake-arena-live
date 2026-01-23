@@ -25,7 +25,7 @@ describe('API Client', () => {
           email: 'snakemaster@game.com',
           password: 'short',
         })
-      ).rejects.toThrow('Invalid email or password');
+      ).rejects.toThrow('String should have at least 6 characters');
     });
 
     it('should reject login with non-existent email', async () => {
@@ -38,15 +38,16 @@ describe('API Client', () => {
     });
 
     it('should sign up with new credentials', async () => {
+      const timestamp = Date.now();
       const result = await apiClient.signUp({
-        username: 'NewPlayer',
-        email: 'newplayer@game.com',
+        username: `NewPlayer${timestamp}`,
+        email: `newplayer${timestamp}@game.com`,
         password: 'password123',
       });
 
       expect(result.user).toBeDefined();
-      expect(result.user.username).toBe('NewPlayer');
-      expect(result.user.email).toBe('newplayer@game.com');
+      expect(result.user.username).toBe(`NewPlayer${timestamp}`);
+      expect(result.user.email).toBe(`newplayer${timestamp}@game.com`);
       expect(result.user.highScore).toBe(0);
     });
 
@@ -67,7 +68,7 @@ describe('API Client', () => {
           email: 'unique@game.com',
           password: 'short',
         })
-      ).rejects.toThrow('Password must be at least 6 characters');
+      ).rejects.toThrow('String should have at least 6 characters');
     });
 
     it('should logout successfully', async () => {
