@@ -51,6 +51,28 @@ uv run uvicorn main:app --reload --port 8081
 ```
 *API docs accessible at `http://127.0.0.1:8081/docs`.*
 
+## 🧪 Testing
+
+### Backend tests
+Run unit tests:
+```bash
+cd backend
+uv run pytest
+```
+
+Run integration tests (requires DB setup logic):
+```bash
+cd backend
+uv run pytest tests_integration
+```
+*Note: Integration tests verify database constraints and connection logic using SQLite.*
+
+### Frontend tests
+```bash
+cd frontend
+npm run test
+```
+
 ## 🧪 Documentation & Testing
 
 Each sub-project contains its own detailed documentation and test suite:
