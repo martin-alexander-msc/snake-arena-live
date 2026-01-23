@@ -35,6 +35,10 @@ To maintain code quality and project stability, all AI coding assistants should 
     - Use `src/test/setup.ts` to add global mocks (like `localStorage`).
     - Prefer `vitest` for logic/component tests and `playwright` for E2E flows.
 - [ ] **Error Handling**: Use the existing `toast` system for user-facing feedback.
+- [ ] **Security (OWASP)**:
+    - Never store plaintext passwords; always hash with a strong, adaptive algorithm before persistence.
+    - Never commit secrets (API keys, tokens, credentials, private keys) to the repo. Use env vars and `.env` files (gitignored) or a secrets manager.
+    - Remove sensitive data from logs, fixtures, and sample payloads unless explicitly required and clearly marked as non-production.
 
 ## 📋 Documentation
 
