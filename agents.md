@@ -17,6 +17,12 @@ To maintain code quality and project stability, all AI coding assistants should 
 - [ ] **Run Tests Before Finalizing**: Always run the test suite before declaring a task complete.
 - [ ] **Explicit Permission**: NEVER make code changes or updates to files unless specifically asked by the user. 
     - Once an **Implementation Plan** is approved, proceed with implementation immediately. Do NOT ask for additional confirmation on reviewing file changes during implementation unless a major design shift occurs.
+- [ ] **Implementation Plan Required**: ALWAYS present a detailed implementation plan before making any code changes.
+    - Describe the files that will be created, modified, or deleted.
+    - Outline the specific changes to be made in each file.
+    - Explain the rationale and approach.
+    - Wait for user feedback and approval before proceeding with implementation.
+    - Only proceed with implementation after receiving explicit approval or a clear "go ahead" signal.
 - [ ] **Commit Regularly**: Make small, logical commits after each reasonable step rather than one giant commit at the end.
     - If a single implementation plan covers several logical components, consider making multiple separate commits where it makes sense (on a case-by-case basis).
 - [ ] **Use Imperative Commits**: Write commit messages in the imperative mood (e.g., "Add sound utility" instead of "Added sound utility").
