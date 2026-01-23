@@ -1,4 +1,4 @@
-aimport { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { apiClient } from '@/api/client';
 
 describe('API Client', () => {
