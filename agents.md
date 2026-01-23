@@ -4,14 +4,24 @@ To maintain code quality and project stability, all AI coding assistants should 
 
 ## 🚀 Development Workflow
 
+- [ ] **Implementation Plan Required (ALWAYS FIRST)**: ALWAYS present a detailed implementation plan before making any code changes, commits, or branch operations.
+    - Describe the files that will be created, modified, or deleted.
+    - Outline the specific changes to be made in each file.
+    - Explain the rationale and approach.
+    - Wait for user feedback and approval before proceeding with implementation.
+    - Only proceed with implementation after receiving explicit approval or a clear "go ahead" signal.
+    - This applies to ALL requests, including those on non-main branches.
+    - **Exception for trivial changes**: Simple, single-file edits (documentation updates, typo fixes, config clarifications) that don't require complex planning can proceed without a full implementation plan.
 - [ ] **Branching Strategy**: ALWAYS check the current branch before starting work.
     - Create a new branch ONLY if you are currently on `main`.
     - Branch names MUST be prefixed with `feature/` or `bug/` (e.g., `feature/add-login`).
     - **Never** create a new branch or "sub-branch" if the current branch is not `main`. Continue work in the existing branch.
+    - **Do NOT switch branches or checkout main to circumvent this rule.** If you are not on main, present the implementation plan first and continue work in the existing branch.
 - [ ] **No Direct Commits**: Never commit directly to the `main` branch.
 - [ ] **Pull Requests**: Raise a Pull Request (PR) to `main` using the GitHub CLI (`gh pr create`) only after finishing the task.
     - **Check for existing PRs**: Only create a new PR if one does not already exist for the current branch.
-    - **Update existing PR descriptions**: If a PR already exists for the current branch, do NOT create a new PR. Instead, update the PR description to reflect the current work using `gh pr edit <pr-number> --body "<new-description>"`.
+    - **Return PR link in result**: Always include the PR URL in the final result so the user can easily navigate to it.
+    - **Update existing PR descriptions**: If a PR already exists for the current branch, do NOT create a new PR. Instead, update the PR description using `gh pr edit <pr-number> --body "<new-description>"`.
     - Follow the [GitHub flow](https://docs.github.com/en/get-started/using-git/github-flow) principles.
     - MUST follow the [pull_request_template.md](file:///Users/marty/git/snake-arena-live/.github/pull_request_template.md) when raising a PR.
 - [ ] **Publish Branch**: Make sure to publish the created branch to GitHub (`git push -u origin <branch-name>`) after committing changes.
