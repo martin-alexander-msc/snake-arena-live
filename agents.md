@@ -4,10 +4,18 @@ To maintain code quality and project stability, all AI coding assistants should 
 
 ## 🚀 Development Workflow
 
+- [ ] **Implementation Plan Required (ALWAYS FIRST)**: ALWAYS present a detailed implementation plan before making any code changes, commits, or branch operations.
+    - Describe the files that will be created, modified, or deleted.
+    - Outline the specific changes to be made in each file.
+    - Explain the rationale and approach.
+    - Wait for user feedback and approval before proceeding with implementation.
+    - Only proceed with implementation after receiving explicit approval or a clear "go ahead" signal.
+    - This applies to ALL requests, including those on non-main branches.
 - [ ] **Branching Strategy**: ALWAYS check the current branch before starting work.
     - Create a new branch ONLY if you are currently on `main`.
     - Branch names MUST be prefixed with `feature/` or `bug/` (e.g., `feature/add-login`).
     - **Never** create a new branch or "sub-branch" if the current branch is not `main`. Continue work in the existing branch.
+    - **Do NOT switch branches or checkout main to circumvent this rule.** If you are not on main, present the implementation plan first and continue work in the existing branch.
 - [ ] **No Direct Commits**: Never commit directly to the `main` branch.
 - [ ] **Pull Requests**: Raise a Pull Request (PR) to `main` using the GitHub CLI (`gh pr create`) only after finishing the task.
     - **Check for existing PRs**: Only create a new PR if one does not already exist for the current branch.
@@ -17,12 +25,6 @@ To maintain code quality and project stability, all AI coding assistants should 
 - [ ] **Run Tests Before Finalizing**: Always run the test suite before declaring a task complete.
 - [ ] **Explicit Permission**: NEVER make code changes or updates to files unless specifically asked by the user. 
     - Once an **Implementation Plan** is approved, proceed with implementation immediately. Do NOT ask for additional confirmation on reviewing file changes during implementation unless a major design shift occurs.
-- [ ] **Implementation Plan Required**: ALWAYS present a detailed implementation plan before making any code changes.
-    - Describe the files that will be created, modified, or deleted.
-    - Outline the specific changes to be made in each file.
-    - Explain the rationale and approach.
-    - Wait for user feedback and approval before proceeding with implementation.
-    - Only proceed with implementation after receiving explicit approval or a clear "go ahead" signal.
 - [ ] **Commit Regularly**: Make small, logical commits after each reasonable step rather than one giant commit at the end.
     - If a single implementation plan covers several logical components, consider making multiple separate commits where it makes sense (on a case-by-case basis).
 - [ ] **Use Imperative Commits**: Write commit messages in the imperative mood (e.g., "Add sound utility" instead of "Added sound utility").
