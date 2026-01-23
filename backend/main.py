@@ -8,6 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 from passlib.context import CryptContext
+from passlib.exc import UnknownHashError
 from sqlalchemy.orm import Session
 
 from models import (
@@ -44,6 +45,29 @@ app.add_middleware(
 # Auth helper setup
 pwd_context = CryptContext(schemes=["sha256_crypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
+
+def get_password_hash(password: str) -> str:
+    return pwd_context.hash(password)
+
+def verify_password_and_upgrade(
+    plain_password: str,
+    stored_hash: str,
+    user_db: sql_models.User,
+    db: Session
+) -> bool:
+    try:
+        verified = pwd_context.verify(plain_password, stored_hash)
+    except UnknownHashError:
+        verified = plain_password == stored_hash
+        if verified:
+            user_db.hashed_password = get_password_hash(plain_password)
+            db.commit()
+        return verified
+
+    if verified and pwd_context.needs_update(stored_hash):
+        user_db.hashed_password = get_password_hash(plain_password)
+        db.commit()
+    return verified
 
 def create_access_token(data: dict):
     to_encode = data.copy()
@@ -94,8 +118,7 @@ async def signup(credentials: SignUpCredentials, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Email or username already exists")
     
     user_id = f"user_{int(datetime.utcnow().timestamp())}"
-    # In a real app, hash the password!
-    hashed_password = credentials.password 
+    hashed_password = get_password_hash(credentials.password)
     
     new_user_db = sql_models.User(
         id=user_id,
@@ -131,7 +154,7 @@ async def login(credentials: AuthCredentials, db: Session = Depends(get_db)):
     if not user_db:
         raise HTTPException(status_code=401, detail="Invalid email or password")
     
-    if credentials.password != user_db.hashed_password:
+    if not verify_password_and_upgrade(credentials.password, user_db.hashed_password, user_db, db):
         raise HTTPException(status_code=401, detail="Invalid email or password")
     
     token = create_access_token(data={"sub": user_db.email})

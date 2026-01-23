@@ -2,7 +2,7 @@ import pytest
 from httpx import ASGITransport, AsyncClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from main import app, get_db
+from main import app, get_db, get_password_hash
 from db_setup import Base
 import sql_models
 from datetime import datetime
@@ -50,7 +50,7 @@ async def test_login():
     db = TestingSessionLocal()
     user = sql_models.User(
         id="user_1", username="SnakeMaster", email="snakemaster@game.com", 
-        hashed_password="password123", highScore=2500, gamesPlayed=150
+        hashed_password=get_password_hash("password123"), highScore=2500, gamesPlayed=150
     )
     db.add(user)
     db.commit()
@@ -103,7 +103,7 @@ async def test_update_profile():
     db = TestingSessionLocal()
     user = sql_models.User(
         id="user_test", username="OriginalName", email="change@game.com", 
-        hashed_password="password123"
+        hashed_password=get_password_hash("password123")
     )
     db.add(user)
     db.commit()
