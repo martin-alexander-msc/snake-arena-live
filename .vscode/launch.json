@@ -16,12 +16,13 @@
             "serverReadyAction": {
                 "pattern": "Local:.*(https?://\\S+)",
                 "uriFormat": "%s",
-                "action": "debugWithChrome"
+                "action": "openExternally"
             }
         },
         {
             "name": "Backend",
             "type": "debugpy",
+            "python": "${workspaceFolder}/backend/.venv/bin/python",
             "request": "launch",
             "module": "uvicorn",
             "args": [
