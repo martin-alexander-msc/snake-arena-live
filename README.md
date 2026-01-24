@@ -51,6 +51,24 @@ uv run uvicorn main:app --reload --port 8081
 ```
 *API docs accessible at `http://127.0.0.1:8081/docs`.*
 
+## 🐳 Docker Support
+
+To run the application with Docker (Postgres database):
+
+1.  **DHI Login** (Required for base images):
+    ```bash
+    docker login dhi.io
+    ```
+
+2.  **Start Services**:
+    ```bash
+    docker-compose up --build
+    ```
+
+3.  **Access**:
+    - Frontend: `http://localhost:8085`
+    - Backend API: `http://localhost:8081/docs`
+
 ## 🧪 Testing
 
 ### Backend tests
