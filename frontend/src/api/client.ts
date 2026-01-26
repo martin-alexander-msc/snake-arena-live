@@ -8,7 +8,7 @@ import {
   GameMode
 } from '@/types/game';
 
-const API_BASE_URL = 'http://localhost:8081';
+const API_BASE_URL = '';
 const STORAGE_KEY = 'snake_game_auth';
 
 // In-memory state

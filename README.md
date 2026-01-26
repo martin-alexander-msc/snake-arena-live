@@ -29,7 +29,7 @@ This will start:
 - **Frontend** at `http://localhost:8085`
 - **Backend** at `http://localhost:8081` (API docs at `/docs`)
 
-Both servers run simultaneously with color-coded output (cyan for frontend, magenta for backend).
+When running locally without Docker, the frontend proxies API requests to the backend server.
 
 ### Running Servers Individually
 
@@ -66,8 +66,8 @@ To run the application with Docker (Postgres database):
     ```
 
 3.  **Access**:
-    - Frontend: `http://localhost:8085`
-    - Backend API: `http://localhost:8081/docs`
+    - Application (Frontend & API): `http://localhost:8085`
+    - API Documentation: `http://localhost:8085/docs`
 
 ## 🧪 Testing
 
