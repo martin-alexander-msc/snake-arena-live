@@ -11,6 +11,12 @@ export default defineConfig(({ mode }) => ({
     hmr: {
       overlay: false,
     },
+    proxy: {
+      "/auth": "http://localhost:8081",
+      "/leaderboard": "http://localhost:8081",
+      "/live-games": "http://localhost:8081",
+      "/users": "http://localhost:8081",
+    },
   },
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
   resolve: {
