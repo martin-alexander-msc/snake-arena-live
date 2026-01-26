@@ -21,7 +21,7 @@ RUN uv lock
 RUN uv sync --no-install-project --no-dev
 
 # --- Final Runtime Stage ---
-FROM dhi.io/python:3.12
+FROM python:3.12-slim
 WORKDIR /app
 
 # Copy backend virtualenv
