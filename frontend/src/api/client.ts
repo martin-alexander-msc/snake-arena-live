@@ -55,6 +55,14 @@ async function handleResponse<T>(response: Response): Promise<T> {
 }
 
 /**
+ * Helper to construct absolute URLs for fetch and URL constructor
+ */
+const getUrl = (path: string) => {
+  const base = API_BASE_URL || (typeof window !== 'undefined' ? window.location.origin : 'http://localhost');
+  return `${base.replace(/\/$/, '')}/${path.replace(/^\//, '')}`;
+};
+
+/**
  * Centralized API client for all backend calls
  * Communicates with the FastAPI backend at http://localhost:8081
  */
@@ -62,7 +70,7 @@ export const apiClient = {
   // ==================== AUTH ====================
 
   async login(credentials: AuthCredentials): Promise<AuthResponse> {
-    const response = await fetch(`${API_BASE_URL}/auth/login`, {
+    const response = await fetch(getUrl('auth/login'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(credentials),
@@ -78,7 +86,7 @@ export const apiClient = {
   },
 
   async signUp(credentials: SignUpCredentials): Promise<AuthResponse> {
-    const response = await fetch(`${API_BASE_URL}/auth/signup`, {
+    const response = await fetch(getUrl('auth/signup'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(credentials),
@@ -95,7 +103,7 @@ export const apiClient = {
 
   async logout(): Promise<void> {
     if (authToken) {
-      await fetch(`${API_BASE_URL}/auth/logout`, {
+      await fetch(getUrl('auth/logout'), {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${authToken}`,
@@ -112,7 +120,7 @@ export const apiClient = {
     if (!authToken) return null;
 
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/me`, {
+      const response = await fetch(getUrl('auth/me'), {
         headers: {
           'Authorization': `Bearer ${authToken}`,
         },
@@ -137,7 +145,7 @@ export const apiClient = {
   // ==================== LEADERBOARD ====================
 
   async getLeaderboard(mode?: GameMode): Promise<LeaderboardEntry[]> {
-    const url = new URL(`${API_BASE_URL}/leaderboard`, window.location.origin);
+    const url = new URL(getUrl('leaderboard'));
     if (mode) {
       url.searchParams.append('mode', mode);
     }
@@ -149,7 +157,7 @@ export const apiClient = {
   async submitScore(score: number, mode: GameMode): Promise<LeaderboardEntry | null> {
     if (!authToken) return null;
 
-    const response = await fetch(`${API_BASE_URL}/leaderboard/submit`, {
+    const response = await fetch(getUrl('leaderboard/submit'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -164,13 +172,13 @@ export const apiClient = {
   // ==================== LIVE GAMES ====================
 
   async getLiveGames(): Promise<LiveGame[]> {
-    const response = await fetch(`${API_BASE_URL}/live-games`);
+    const response = await fetch(getUrl('live-games'));
     return handleResponse<LiveGame[]>(response);
   },
 
   async getLiveGame(gameId: string): Promise<LiveGame | null> {
     try {
-      const response = await fetch(`${API_BASE_URL}/live-games/${gameId}`);
+      const response = await fetch(getUrl(`live-games/${gameId}`));
       if (response.status === 404) return null;
       return handleResponse<LiveGame>(response);
     } catch {
@@ -180,7 +188,7 @@ export const apiClient = {
 
   async joinAsViewer(gameId: string): Promise<boolean> {
     try {
-      const response = await fetch(`${API_BASE_URL}/live-games/${gameId}/join`, {
+      const response = await fetch(getUrl(`live-games/${gameId}/join`), {
         method: 'POST',
       });
       return response.ok;
@@ -191,7 +199,7 @@ export const apiClient = {
 
   async leaveAsViewer(gameId: string): Promise<void> {
     try {
-      await fetch(`${API_BASE_URL}/live-games/${gameId}/leave`, {
+      await fetch(getUrl(`live-games/${gameId}/leave`), {
         method: 'POST',
       });
     } catch {
@@ -204,7 +212,7 @@ export const apiClient = {
   async updateProfile(updates: Partial<Pick<User, 'username' | 'avatar'>>): Promise<User> {
     if (!authToken) throw new Error('Not authenticated');
 
-    const response = await fetch(`${API_BASE_URL}/users/profile`, {
+    const response = await fetch(getUrl('users/profile'), {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -226,7 +234,7 @@ export const apiClient = {
   },
 
   async getUserStats(userId: string): Promise<{ highScore: number; gamesPlayed: number; rank: number }> {
-    const response = await fetch(`${API_BASE_URL}/users/${userId}/stats`);
+    const response = await fetch(getUrl(`users/${userId}/stats`));
     return handleResponse<{ highScore: number; gamesPlayed: number; rank: number }>(response);
   },
 };
