@@ -137,7 +137,7 @@ export const apiClient = {
   // ==================== LEADERBOARD ====================
 
   async getLeaderboard(mode?: GameMode): Promise<LeaderboardEntry[]> {
-    const url = new URL(`${API_BASE_URL}/leaderboard`);
+    const url = new URL(`${API_BASE_URL}/leaderboard`, window.location.origin);
     if (mode) {
       url.searchParams.append('mode', mode);
     }
