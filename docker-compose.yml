@@ -13,22 +13,15 @@ services:
       timeout: 5s
       retries: 5
 
-  backend:
-    build: ./backend
+  app:
+    build: .
     environment:
       DATABASE_URL: postgresql://user:password@postgres:5432/snake_arena
     depends_on:
       postgres:
         condition: service_healthy
     ports:
-      - "8081:8081"
-
-  frontend:
-    build: ./frontend
-    depends_on:
-      - backend
-    ports:
-      - "8085:8080"
+      - "8085:8081"
 
 volumes:
   postgres_data:
