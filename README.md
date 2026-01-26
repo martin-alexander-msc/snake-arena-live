@@ -69,6 +69,21 @@ To run the application with Docker (Postgres database):
     - Application (Frontend & API): `http://localhost:8085`
     - API Documentation: `http://localhost:8085/docs`
 
+## 🚀 Deployment to Render
+
+This project includes a `render.yaml` blueprint for easy deployment to [Render](https://render.com/).
+
+1.  **Fork** this repository to your GitHub account.
+2.  Log in to [Render](https://dashboard.render.com/) and go to the **Blueprints** section.
+3.  Connect your GitHub account and select this repository.
+4.  Render will automatically detect the `render.yaml` and prompt you to create a **PostgreSQL database** and a **Web Service**.
+5.  Click **Apply** and wait for the build to finish.
+
+The blueprint handles:
+- Provisioning a Managed Postgres instance.
+- Building the unified Docker container.
+- Connecting the database via the `DATABASE_URL` environment variable.
+
 ## 🧪 Testing
 
 ### Backend tests
