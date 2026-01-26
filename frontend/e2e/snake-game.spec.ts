@@ -5,7 +5,7 @@ test.describe("Snake Game", () => {
     await page.goto("/");
 
     // Verify header elements
-    await expect(page.getByText("NEON SNAKE")).toBeVisible();
+    await expect(page.getByText("THE NEON SNAKE")).toBeVisible();
     await expect(page.getByRole("button", { name: /sign in/i })).toBeVisible();
 
     // Verify navigation tabs
@@ -46,7 +46,7 @@ test.describe("Snake Game", () => {
 
     // Switch to walls mode
     await wallsButton.click();
-    
+
     // Start and verify mode change affects gameplay visuals
     await expect(wallsButton).toHaveClass(/bg-neon-pink/);
   });
