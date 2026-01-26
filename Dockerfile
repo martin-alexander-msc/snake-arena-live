@@ -37,7 +37,8 @@ COPY backend/ /app/
 ENV PYTHONPATH="/app/.venv/lib/python3.12/site-packages"
 
 # Expose the application port
-EXPOSE 8081
+ENV PORT=8081
+EXPOSE ${PORT}
 
 # Run the unified application
-CMD ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8081"]
+CMD ["sh", "-c", "python -m uvicorn main:app --host 0.0.0.0 --port ${PORT}"]
