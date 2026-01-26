@@ -16,7 +16,7 @@ export function Header({ onOpenAuth }: HeaderProps) {
           </div>
           <div>
             <h1 className="font-display text-xl font-bold neon-text text-primary">
-              NEON SNAKE
+              THE NEON SNAKE
             </h1>
             <p className="text-xs text-muted-foreground">Arcade Edition</p>
           </div>
